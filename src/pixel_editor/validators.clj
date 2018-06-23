@@ -9,13 +9,13 @@
        (<= 1 x max-size)))
 
 (defn within-width?
-  "check if x is between 1 and image width"
+  "checks if x is between 1 and image width"
   [image x]
   (and (nat-int? x)
        (<= 1 x (width image))))
 
 (defn within-height?
-  "check if y is between 1 and image height"
+  "checks if y is between 1 and image height"
   ([image y]
    (and (nat-int? y)
         (<= 1 y (height image)))))
@@ -25,6 +25,7 @@
   (and (string? x) (= 1 (count x))))
 
 (defn new-image?
+  "validates args for new-image command (I)"
   [args]
   (and (= 2 (count args))
        (let [[x y] args]
@@ -32,6 +33,7 @@
               (within-max-size? y)))))
 
 (defn point-with-colour?
+  "validates args for colour (L) and fill-region (F) commands"
   [image args]
   (and (= 3 (count args))
        (let [[x y c] args]
@@ -40,6 +42,7 @@
               (is-colour? c)))))
 
 (defn vertical-line?
+  "validates args for vertical-line command (V)"
   [image args]
   (and (= 4 (count args))
        (let [[x y1 y2 c] args]
@@ -50,6 +53,7 @@
               (is-colour? c)))))
 
 (defn horizontal-line?
+  "validates args for horizontal-line command (H)"
   [image args]
   (and (= 4 (count args))
        (let [[x1 x2 y c] args]
