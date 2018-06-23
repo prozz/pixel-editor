@@ -24,7 +24,9 @@
                "Q" cmd/quit
                "help" #(cmd/print-help syntax)})
 
-(defn handle [line]
+(defn handle
+  "parses user input and applies suitable command"
+  [line]
   (let [input (map u/symbol->str (read-string (str "[" line "]")))
         cmd (first input)
         args (rest input)]
@@ -33,6 +35,7 @@
       (catch AssertionError e (println "Syntax error:" (get syntax cmd))))))
 
 (defn prompt-read-line
+  "prints prompt and wait for user input"
   []
   (print "> ")
   (flush)
@@ -49,7 +52,7 @@
   (doseq [line (repeatedly prompt-read-line) :while line]
     (try
       (handle line)
-      (catch Exception e (println "Unknown command. Type 'help' for help." e))))
+      (catch Exception e (println "Unknown command. Type 'help' for help."))))
 
   (u/bye))
 
