@@ -1,4 +1,5 @@
 (ns pixel-editor.core
+  "pixel editor core logic"
   (:require [clojure.string :as str]))
 
 (def white \O)

@@ -1,4 +1,5 @@
-(ns pixel-editor.utils)
+(ns pixel-editor.utils
+  "bunch of utility functions used across whole project")
 
 (defn symbol->str
   "replaces symbol with string or leave input untouched"

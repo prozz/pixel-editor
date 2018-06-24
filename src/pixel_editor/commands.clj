@@ -1,4 +1,5 @@
 (ns pixel-editor.commands
+  "commands implementation used by command line interface"
   (:require [clojure.string :as str]
             [pixel-editor.core :as c]
             [pixel-editor.utils :as u]

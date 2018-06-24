@@ -1,4 +1,5 @@
 (ns pixel-editor.cli
+  "command line interface for pixel editor"
   (:require [clojure.repl :as r]
             [pixel-editor.commands :as cmd]
             [pixel-editor.utils :as u]

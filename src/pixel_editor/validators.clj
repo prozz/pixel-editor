@@ -1,4 +1,5 @@
 (ns pixel-editor.validators
+  "validators for user input from cli"
   (:require [pixel-editor.core :refer [width height]]))
 
 (def max-size 250)

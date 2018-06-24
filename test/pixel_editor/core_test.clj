@@ -69,12 +69,11 @@
       (is (= 14 (count (region-points image3x5 0 0)))))))
 
 (deftest integration
-
   (testing "real scenario #1"
-    ;; > I 4 7 
-    ;; > L 2 3 T
-    ;; > L 1 4 G
-    ;; > F 1 1 Y
+    ; > I 4 7 
+    ; > L 2 3 T
+    ; > L 1 4 G
+    ; > F 1 1 Y
     (let [image (-> (create-image 4 7)
                     (colour (normalize [2 3 \T]))
                     (colour (normalize [1 4 \G]))
