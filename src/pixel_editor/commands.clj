@@ -35,7 +35,7 @@
 
 (defn colour
   [& args]
-  {:pre [(v/point-with-colour? @current-image args)]}
+  {:pre [(v/pixel-with-colour? @current-image args)]}
   (apply-on-existing-image #(swap! current-image c/colour (normalize args))))
 
 (defn vertical-line
@@ -50,7 +50,7 @@
 
 (defn fill-region
   [& args]
-  {:pre [(v/point-with-colour? @current-image args)]}
+  {:pre [(v/pixel-with-colour? @current-image args)]}
   (apply-on-existing-image #(swap! current-image c/fill-region (normalize args))))
 
 (defn quit

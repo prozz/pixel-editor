@@ -37,36 +37,36 @@
   (testing "within-image?"
     (is (true? (within-image? (create-image 2 3) [0 0])))
     (is (false? (within-image? (create-image 2 3) [2 0]))))
-  (testing "adjacent-points"
-    (is (= '((1 3) (2 2) (2 4) (3 3)) (adjacent-points (create-image 5 5) [2 3])))
-    (is (= '((0 1) (1 0)) (adjacent-points (create-image 2 2) [0 0])))
-    (is (= '((0 1) (1 0)) (adjacent-points (create-image 2 2) [1 1])))
-    (is (empty? (adjacent-points (create-image 2 2) [2 2])))
-    (is (= '((0 2) (1 1)) (adjacent-points (create-image 2 3) [1 2]))))
+  (testing "adjacent-pixels"
+    (is (= '((1 3) (2 2) (2 4) (3 3)) (adjacent-pixels (create-image 5 5) [2 3])))
+    (is (= '((0 1) (1 0)) (adjacent-pixels (create-image 2 2) [0 0])))
+    (is (= '((0 1) (1 0)) (adjacent-pixels (create-image 2 2) [1 1])))
+    (is (empty? (adjacent-pixels (create-image 2 2) [2 2])))
+    (is (= '((0 2) (1 1)) (adjacent-pixels (create-image 2 3) [1 2]))))
   (let [image (-> (create-image 3 3)
                   (colour [0 0 \T])
                   (colour [1 1 \G])
                   (colour [2 2 \B]))
         image3x5 (-> (create-image 3 5)
                      (colour [1 1 \G]))
-        points (for [x (range 3) y (range 3)] [x y])]
+        pixels (for [x (range 3) y (range 3)] [x y])]
     (testing "colour-of"
       (is (= \G (colour-of image [1 1])))
       (is (= \O (colour-of image [0 1]))))
-    (testing "points-of-colour"
-      (is (= 1 (count (points-of-colour image points \T))))
-      (is (= 1 (count (points-of-colour image points \G))))
-      (is (= 1 (count (points-of-colour image points \B))))
-      (is (= 6 (count (points-of-colour image points \O)))))
-    (testing "region-points"
-      (is (= 1 (count (region-points image 0 0))))
-      (is (= 1 (count (region-points image 1 1))))
-      (is (= 1 (count (region-points image 2 2))))
-      (is (= 3 (count (region-points image 0 1))))
-      (is (= 3 (count (region-points image 1 0))))
-      (is (= (region-points image 0 1) (region-points image 0 2)))
-      (is (not= (region-points image 0 1) (region-points image 1 0)))
-      (is (= 14 (count (region-points image3x5 0 0)))))))
+    (testing "pixels-of-colour"
+      (is (= 1 (count (pixels-of-colour image pixels \T))))
+      (is (= 1 (count (pixels-of-colour image pixels \G))))
+      (is (= 1 (count (pixels-of-colour image pixels \B))))
+      (is (= 6 (count (pixels-of-colour image pixels \O)))))
+    (testing "region-pixels"
+      (is (= 1 (count (region-pixels image 0 0))))
+      (is (= 1 (count (region-pixels image 1 1))))
+      (is (= 1 (count (region-pixels image 2 2))))
+      (is (= 3 (count (region-pixels image 0 1))))
+      (is (= 3 (count (region-pixels image 1 0))))
+      (is (= (region-pixels image 0 1) (region-pixels image 0 2)))
+      (is (not= (region-pixels image 0 1) (region-pixels image 1 0)))
+      (is (= 14 (count (region-pixels image3x5 0 0)))))))
 
 (deftest integration
   (testing "real scenario #1"

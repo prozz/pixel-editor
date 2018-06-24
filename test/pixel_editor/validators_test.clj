@@ -24,11 +24,11 @@
         (is (every? true? (map new-image? valid)))
         (is (every? false? (map new-image? invalid)))))
 
-    (testing "point-with-colour?"
+    (testing "pixel-with-colour?"
       (let [valid [[1 5 "F"] [2 1 "G"]]
             invalid [[1 5 \F] [1 5 "FF"] [0 5 "F"] [1 6 "F"] [3 5 "G"] [2 0 "G"]]]
-        (is (every? true? (map (partial point-with-colour? image) valid)))
-        (is (every? false? (map (partial point-with-colour? image) invalid)))))
+        (is (every? true? (map (partial pixel-with-colour? image) valid)))
+        (is (every? false? (map (partial pixel-with-colour? image) invalid)))))
 
     (testing "vertical-line?"
       (let [valid [[1 1 5 "F"] [2 1 5 "F"]]

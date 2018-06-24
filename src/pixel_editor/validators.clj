@@ -33,7 +33,7 @@
          (and (within-max-size? x)
               (within-max-size? y)))))
 
-(defn point-with-colour?
+(defn pixel-with-colour?
   "validates args for colour (L) and fill-region (F) commands"
   [image args]
   (and (= 3 (count args))
