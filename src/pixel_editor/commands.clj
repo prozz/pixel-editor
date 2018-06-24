@@ -7,7 +7,7 @@
 
 (def current-image (atom nil))
 
-(defn- apply-on-existing-image
+(defn- apply-on-image
   [f]
   (if (nil? @current-image)
     (throw (ex-info "No image." {}))
@@ -26,32 +26,32 @@
 (defn show
   [& args]
   {:pre [(empty? args)]}
-  (apply-on-existing-image #(println (str "=>\n" (c/image->str @current-image)))))
+  (apply-on-image #(println (str "=>\n" (c/image->str @current-image)))))
 
 (defn clear
   [& args]
   {:pre [(empty? args)]}
-  (apply-on-existing-image #(swap! current-image c/clear)))
+  (apply-on-image #(swap! current-image c/clear)))
 
 (defn colour
   [& args]
   {:pre [(v/pixel-with-colour? @current-image args)]}
-  (apply-on-existing-image #(swap! current-image c/colour (normalize args))))
+  (apply-on-image #(swap! current-image c/colour (normalize args))))
 
 (defn vertical-line
   [& args]
   {:pre [(v/vertical-line? @current-image args)]}
-  (apply-on-existing-image #(swap! current-image c/vertical-line (normalize args))))
+  (apply-on-image #(swap! current-image c/vertical-line (normalize args))))
 
 (defn horizontal-line
   [& args]
   {:pre [(v/horizontal-line? @current-image args)]}
-  (apply-on-existing-image #(swap! current-image c/horizontal-line (normalize args))))
+  (apply-on-image #(swap! current-image c/horizontal-line (normalize args))))
 
 (defn fill-region
   [& args]
   {:pre [(v/pixel-with-colour? @current-image args)]}
-  (apply-on-existing-image #(swap! current-image c/fill-region (normalize args))))
+  (apply-on-image #(swap! current-image c/fill-region (normalize args))))
 
 (defn quit
   [& args]
