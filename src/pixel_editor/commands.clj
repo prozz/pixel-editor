@@ -9,10 +9,10 @@
 (defn- apply-on-existing-image
   [f]
   (if (nil? @current-image)
-    (println "No image.")
+    (throw (ex-info "No image." {}))
     (f)))
 
-(defn- normalize
+(defn normalize
   "adjusting to indexing from 0, needed by all commands but new-image"
   [args]
   (map u/decrement args))

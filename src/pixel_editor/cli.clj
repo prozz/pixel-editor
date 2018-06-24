@@ -32,6 +32,7 @@
         args (rest input)]
     (try
       (apply (get commands cmd) args)
+      (catch clojure.lang.ExceptionInfo e (println (.getMessage e)))
       (catch AssertionError e (println "Syntax error:" (get syntax cmd))))))
 
 (defn prompt-read-line

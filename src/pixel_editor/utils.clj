@@ -6,7 +6,7 @@
   (if (symbol? x) (str x) x))
 
 (defn decrement
-  "replaces number with decremented number or leave input untouched"
+  "replaces int with decremented int or leave input untouched"
   [x]
   (if (int? x) (dec x) x))
 

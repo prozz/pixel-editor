@@ -1,6 +1,7 @@
 (ns pixel-editor.core-test
   (:require [clojure.test :refer :all]
-            [pixel-editor.core :refer :all]))
+            [pixel-editor.core :refer :all]
+            [pixel-editor.commands :refer [normalize]]))
 
 (deftest basics
   (let [image (create-image 2 3)]
@@ -40,14 +41,14 @@
     (is (= '((1 3) (2 2) (2 4) (3 3)) (adjacent-points (create-image 5 5) [2 3])))
     (is (= '((0 1) (1 0)) (adjacent-points (create-image 2 2) [0 0])))
     (is (= '((0 1) (1 0)) (adjacent-points (create-image 2 2) [1 1])))
-    (is (= '() (adjacent-points (create-image 2 2) [2 2])))
+    (is (empty? (adjacent-points (create-image 2 2) [2 2])))
     (is (= '((0 2) (1 1)) (adjacent-points (create-image 2 3) [1 2]))))
   (let [image (-> (create-image 3 3)
                   (colour [0 0 \T])
                   (colour [1 1 \G])
                   (colour [2 2 \B]))
         image3x5 (-> (create-image 3 5)
-                        (colour [1 1 \G]))
+                     (colour [1 1 \G]))
         points (for [x (range 3) y (range 3)] [x y])]
     (testing "colour-of"
       (is (= \G (colour-of image [1 1])))
@@ -68,15 +69,22 @@
       (is (= 14 (count (region-points image3x5 0 0)))))))
 
 (deftest integration
-  ;; > I 4 7 
-  ;; > L 2 3 T
-  ;; > L 1 4 G
-  ;; > F 1 1 Y
 
   (testing "real scenario #1"
+    ;; > I 4 7 
+    ;; > L 2 3 T
+    ;; > L 1 4 G
+    ;; > F 1 1 Y
     (let [image (-> (create-image 4 7)
-                    (colour [1 2 \T])
-                    (colour [0 3 \G])
-                    (fill-region [0 0 \Y]))]
-      (println (image->str image))
-      (is (= 1 1)))))
+                    (colour (normalize [2 3 \T]))
+                    (colour (normalize [1 4 \G]))
+                    (fill-region (normalize [1 1 \Y])))
+          image-str (image->str image)]
+      (println image-str)
+      (is (= (str "YYYY\n"
+                  "YYYY\n"
+                  "YTYY\n"
+                  "GYYY\n"
+                  "YYYY\n"
+                  "YYYY\n"
+                  "YYYY") image-str)))))
