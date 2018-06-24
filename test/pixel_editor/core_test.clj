@@ -77,13 +77,35 @@
     (let [image (-> (create-image 4 7)
                     (colour (normalize [2 3 \T]))
                     (colour (normalize [1 4 \G]))
-                    (fill-region (normalize [1 1 \Y])))
-          image-str (image->str image)]
-      (println image-str)
+                    (fill-region (normalize [1 1 \Y])))]
       (is (= (str "YYYY\n"
                   "YYYY\n"
                   "YTYY\n"
                   "GYYY\n"
                   "YYYY\n"
                   "YYYY\n"
-                  "YYYY") image-str)))))
+                  "YYYY") (image->str image)))))
+  (testing "from docs"
+    ; > I 5 6
+    ; > L 2 3 A
+    (let [image (-> (create-image 5 6)
+                    (colour (normalize [2 3 \A])))]
+      (is (= (str "OOOOO\n"
+                  "OOOOO\n"
+                  "OAOOO\n"
+                  "OOOOO\n"
+                  "OOOOO\n"
+                  "OOOOO") (image->str image)))
+      ; > F 3 3 J
+      ; > V 2 3 4 W
+      ; > H 3 4 2 Z
+      (let [image-2 (-> image
+                        (fill-region (normalize [3 3 \J]))
+                        (vertical-line (normalize [2 3 4 \W]))
+                        (horizontal-line (normalize [3 4 2 \Z])))]
+        (is (= (str "JJJJJ\n"
+                    "JJZZJ\n"
+                    "JWJJJ\n"
+                    "JWJJJ\n"
+                    "JJJJJ\n"
+                    "JJJJJ") (image->str image-2)))))))
