@@ -1,7 +1,7 @@
 (ns pixel-editor.core-test
   (:require [clojure.test :refer :all]
             [pixel-editor.core :refer :all]
-            [pixel-editor.commands :refer [normalize]]))
+            [pixel-editor.commands-core :refer [normalize]]))
 
 (deftest basics
   (let [image (create-image 2 3)]
