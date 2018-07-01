@@ -26,7 +26,7 @@
   [& args]
 
   (r/set-break-handler! (fn [s] (u/bye)))
-  (cmd/init)
+  (cmd/init!)
 
   (println "=>\nWelcome to pixel-editor!")
   (cmd/print-help)

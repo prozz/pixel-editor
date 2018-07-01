@@ -4,15 +4,12 @@
             [pixel-editor.core :refer [image->str]]))
 
 (deftest integration
-  (cmd/init)
-
+  (cmd/init!)
   (testing "real scenario #1"
     ; > I 4 7 
     ; > L 2 3 T
     ; > L 1 4 G
     ; > F 1 1 Y
-    (println @cmd/current-image)
-    (println @cmd/commands)
     (cmd/run-command "I" [4 7])
     (cmd/run-command "L" [2 3 "T"])
     (cmd/run-command "L" [1 4 "G"])
