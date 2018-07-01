@@ -79,13 +79,12 @@
       ((:command cmd) current-image args)
       (throw (ex-info (str "Syntax error: " (:desc cmd)) {})))))
 
-
 (defn print-help
   []
   (println (str/join "\n" (get-descriptions))))
 
-(defn init!
-  []
+(defn init
+  [] ; TODO bang!
   (defcommand "I"
     "I <width> <height> - creates new image with given dimensions (from 1 to 250)"
     (args-validator v/new-image?)

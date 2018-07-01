@@ -1,10 +1,10 @@
-(ns pixel-editor.commands
+(ns pixel-editor.commands-test
   (:require [clojure.test :refer :all]
             [pixel-editor.commands :as cmd]
             [pixel-editor.core :refer [image->str]]))
 
 (deftest integration
- ; (init!)
+  (cmd/init)
 
   (testing "real scenario #1"
     ; > I 4 7 
