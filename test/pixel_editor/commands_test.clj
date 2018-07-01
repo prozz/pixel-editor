@@ -33,7 +33,6 @@
                 "OOOOO\n"
                 "OOOOO\n"
                 "OOOOO") (image->str @current-image)))
-
     ; > F 3 3 J
     ; > V 2 3 4 W
     ; > H 3 4 2 Z
