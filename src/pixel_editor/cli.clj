@@ -34,7 +34,7 @@
   (doseq [line (repeatedly prompt-read-line) :while line]
     (try
       (handle line)
-      (catch Exception e (println "Unknown command. Type 'help' for help." e))))
+      (catch Exception e (println "Unknown command. Type 'help' for help."))))
 
   (u/bye))
 
