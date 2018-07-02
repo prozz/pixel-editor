@@ -121,3 +121,34 @@
   "api command. fills region (defined as set of adjacent pixels sharing a colour) with new colour"
   [image [x y colour]]
   (draw-pixels image (region-pixels image x y) colour))
+
+(def ^:private top-right [1 -1])
+(def ^:private top-left [-1 -1])
+(def ^:private bottom-right [1 1])
+(def ^:private bottom-left [-1 1])
+
+(defn- scale
+  [[x y] depth]
+  (mapv (partial * depth) [x y]))
+
+(defn corner
+  [delta [x y] depth]
+  (add-delta x y (scale delta depth)))
+
+(defn square-pixels
+  [image [x y] depth]
+  (let [[x1 y1] (corner top-left [x y] depth)
+        [x2 y2] (corner top-right [x y] depth)
+        [x3 y3] (corner bottom-left [x y] depth)
+        [x4 y4] (corner bottom-right [x y] depth)
+        top-edge (horizontal-pixels x1 x2 y1)
+        bottom-edge (horizontal-pixels x3 x4 y3)
+        left-edge (vertical-pixels x1 y1 y3)
+        right-edge (vertical-pixels x2 y2 y4)]
+    (concat top-edge bottom-edge left-edge right-edge)))
+
+(defn concentric-square
+  [image [x y & colours]]
+  (let [pixels-with-colour (map-indexed #(vector (square-pixels image [x y] %1) %2) colours)]
+    (reduce (fn [image [pixels colour]] (draw-pixels image pixels colour))
+            image pixels-with-colour)))
