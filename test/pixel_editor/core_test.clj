@@ -69,6 +69,17 @@
       (is (= 14 (count (region-pixels image3x5 0 0)))))))
 
 (deftest integration
+  (testing "Q extension"
+    ; > Q 4 4 A B C
+    (let [image (-> (create-image 6 6)
+                    (concentric-square (normalize [4 4 \A \B \C])))]
+      (is (= (str "OOOOOO\n"
+                  "OCCCCC\n"
+                  "OCBBBC\n"
+                  "OCBABC\n"
+                  "OCBBBC\n"
+                  "OCCCCC") (image->str image)))))
+
   (testing "real scenario #1"
     ; > I 4 7 
     ; > L 2 3 T
