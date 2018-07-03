@@ -149,6 +149,6 @@
 
 (defn concentric-square
   [image [x y & colours]]
-  (let [pixels-with-colour (map-indexed #(vector (square-pixels image [x y] %1) %2) colours)]
-    (reduce (fn [image [pixels colour]] (draw-pixels image pixels colour))
-            image pixels-with-colour)))
+  (reduce (fn [image [pixels colour]] (draw-pixels image pixels colour))
+          image
+          (map-indexed #(vector (square-pixels image [x y] %1) %2) colours)))
