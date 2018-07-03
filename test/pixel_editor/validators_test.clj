@@ -40,5 +40,11 @@
       (let [valid [[1 2 1 "F"] [1 2 5 "F"]]
             invalid [[1 2 0 "F"] [1 2 6 "F"] [0 3 1 "F"] [2 1 1 "F"] [1 2 1 \F] [1 2 1 "FF"] [1 2 1]]]
         (is (every? true? (map (partial horizontal-line? image) valid)))
-        (is (every? false? (map (partial horizontal-line? image) invalid)))))))
+        (is (every? false? (map (partial horizontal-line? image) invalid)))))
+
+    (testing "concentric-square?"
+      (let [valid [[2 2 "A"] [2 2 "T" "Y"]]
+            invalid [[2 2] [1] [1 1 \T]]]
+        (is (every? true? (map (partial concentric-square? image) valid)))
+        (is (every? false? (map (partial concentric-square? image) invalid)))))))
 

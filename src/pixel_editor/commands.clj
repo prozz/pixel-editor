@@ -71,45 +71,49 @@
 (defn get-descriptions
   "gets all commands descriptions, useful for building help info"
   []
-  (map :desc commands))
+  (map :desc (vals commands)))
 
 (defn print-help
   []
   (println (str/join "\n" (get-descriptions))))
 
 (def commands
-  {"I" (command "I <width> <height> - creates new image with given dimensions (from 1 to 250)"
-                (args-validator v/new-image?)
-                (reset-image! c/create-image))
+  (array-map "I" (command "I <width> <height> - creates new image with given dimensions (from 1 to 250)"
+                             (args-validator v/new-image?)
+                             (reset-image! c/create-image))
 
-   "S" (command "S - show the content of the current image"
-                (args-validator empty?)
-                (with-image (fn [image args] (println (str "=>\n" (c/image->str image))))))
+             "S" (command "S - show the content of the current image"
+                          (args-validator empty?)
+                          (with-image (fn [image args] (println (str "=>\n" (c/image->str image))))))
 
-   "C" (command "C - clears current image"
-                (args-validator empty?)
-                (update-image! (fn [image args] (c/clear image))))
+             "C" (command "C - clears current image"
+                          (args-validator empty?)
+                          (update-image! (fn [image args] (c/clear image))))
 
-   "L" (command "L <x> <y> <colour> - colours a pixel located at (<x>, <y>) with <colour>"
-                (image-args-validator v/pixel-with-colour?)
-                (update-image! c/colour))
+             "L" (command "L <x> <y> <colour> - colours a pixel located at (<x>, <y>) with <colour>"
+                          (image-args-validator v/pixel-with-colour?)
+                          (update-image! c/colour))
 
-   "V" (command "V <x> <y1> <y2> <colour> - draws vertical line of given <colour> in column <x> from row <y1> to <y2>"
-                (image-args-validator v/vertical-line?)
-                (update-image! c/vertical-line))
+             "V" (command "V <x> <y1> <y2> <colour> - draws vertical line of given <colour> in column <x> from row <y1> to <y2>"
+                          (image-args-validator v/vertical-line?)
+                          (update-image! c/vertical-line))
 
-   "H" (command "H <x1> <x2> <y> <colour> - draws horizontal line of given <colour> in row <y> from column <x1> to <x2>"
-                (image-args-validator v/horizontal-line?)
-                (update-image! c/horizontal-line))
+             "H" (command "H <x1> <x2> <y> <colour> - draws horizontal line of given <colour> in row <y> from column <x1> to <x2>"
+                          (image-args-validator v/horizontal-line?)
+                          (update-image! c/horizontal-line))
 
-   "F" (command "F <x> <y> <colour> - fills nearby pixels with same colour, starting with pixel located at (<x>, <y>) with <colour>"
-                (image-args-validator v/pixel-with-colour?)
-                (update-image! c/fill-region))
+             "F" (command "F <x> <y> <colour> - fills nearby pixels with same colour, starting with pixel located at (<x>, <y>) with <colour>"
+                          (image-args-validator v/pixel-with-colour?)
+                          (update-image! c/fill-region))
 
-   "Q" (command "Q, ctrl-d - quit"
-                (args-validator empty?)
-                (fire u/bye))
+             "K" (command "K <x> <y> <colours> - for every colour draws concentric square centered at (<x>, <y>) increasing radius each time"
+                          (image-args-validator v/concentric-square?)
+                          (update-image! c/concentric-square))
 
-   "help" (command "help - prints help message"
-                   (args-validator empty?)
-                   (fire print-help))})
+             "Q" (command "Q, ctrl-d - quit"
+                          (args-validator empty?)
+                          (fire u/bye))
+
+             "help" (command "help - prints help message"
+                             (args-validator empty?)
+                             (fire print-help))))

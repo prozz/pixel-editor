@@ -17,9 +17,15 @@
 
 (defn within-height?
   "checks if y is between 1 and image height"
-  ([image y]
-   (and (nat-int? y)
-        (<= 1 y (height image)))))
+  [image y]
+  (and (nat-int? y)
+       (<= 1 y (height image))))
+
+(defn within-image?
+  "checks if pixel belongs to image"
+  [image [x y]]
+  (and (within-width? image x)
+       (within-height? image y)))
 
 (defn- is-colour?
   [x]
@@ -32,6 +38,13 @@
        (let [[x y] args]
          (and (within-max-size? x)
               (within-max-size? y)))))
+
+(defn concentric-square?
+  "validates args for concentric-square command (K)"
+  [image args]
+  (and (< 2 (count args))
+       (within-image? image [(first args) (second args)])
+       (every? is-colour? (nthnext args 2))))
 
 (defn pixel-with-colour?
   "validates args for colour (L) and fill-region (F) commands"

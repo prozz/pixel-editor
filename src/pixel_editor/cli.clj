@@ -1,7 +1,6 @@
 (ns pixel-editor.cli
   "command line interface for pixel editor"
-  (:require [pixel-editor.commands-core :refer [run-command]]
-            [pixel-editor.commands :as cmd]
+  (:require [pixel-editor.commands :as cmd]
             [clojure.repl :as r]
             [pixel-editor.utils :as u])
   (:gen-class))
@@ -13,8 +12,8 @@
         cmd (first input)
         args (rest input)]
     (try
-      (run-command cmd args)
-      (catch clojure.lang.ExceptionInfo e (println (.getMessage e))))))
+      (cmd/run-command cmd args)
+      (catch clojure.lang.ExceptionInfo e (println (.getMessage e) e)))))
 
 (defn prompt-read-line
   "prints prompt and wait for user input"
@@ -27,7 +26,6 @@
   [& args]
 
   (r/set-break-handler! (fn [s] (u/bye)))
-  (cmd/init!)
 
   (println "=>\nWelcome to pixel-editor!")
   (cmd/print-help)

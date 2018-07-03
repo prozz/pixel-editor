@@ -4,6 +4,28 @@
             [pixel-editor.core :refer [image->str]]))
 
 (deftest integration
+  (testing "Q extension"
+    ; > I 6 6
+    ; > K 4 4 A B C
+    (cmd/run-command "I" [6 6])
+    (cmd/run-command "K" [4 4 "A" "B" "C"])
+    (is (= (str "OOOOOO\n"
+                "OCCCCC\n"
+                "OCBBBC\n"
+                "OCBABC\n"
+                "OCBBBC\n"
+                "OCCCCC") (image->str @cmd/current-image))))
+  (testing "Q extension outside image"
+    ; > I 6 6
+    ; > K 5 5 A B C
+    (cmd/run-command "I" [6 6])
+    (cmd/run-command "K" [5 5 "A" "B" "C"])
+    (is (= (str "OOOOOO\n"
+                "OOOOOO\n"
+                "OOCCCC\n"
+                "OOCBBB\n"
+                "OOCBAB\n"
+                "OOCBBB") (image->str @cmd/current-image))))
   (testing "real scenario #1"
     ; > I 4 7 
     ; > L 2 3 T
