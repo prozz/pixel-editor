@@ -43,8 +43,9 @@
   "validates args for concentric-square command (K)"
   [image args]
   (and (< 2 (count args))
-       (within-image? image [(first args) (second args)])
-       (every? is-colour? (nthnext args 2))))
+       (let [[x y & colours] args]
+         (within-image? image [x y])
+         (every? is-colour? colours))))
 
 (defn pixel-with-colour?
   "validates args for colour (L) and fill-region (F) commands"
