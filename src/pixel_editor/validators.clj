@@ -44,8 +44,8 @@
   [image args]
   (and (< 2 (count args))
        (let [[x y & colours] args]
-         (within-image? image [x y])
-         (every? is-colour? colours))))
+         (and (within-image? image [x y])
+              (every? is-colour? colours)))))
 
 (defn pixel-with-colour?
   "validates args for colour (L) and fill-region (F) commands"
