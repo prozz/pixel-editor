@@ -79,7 +79,16 @@
                   "OCBABC\n"
                   "OCBBBC\n"
                   "OCCCCC") (image->str image)))))
-
+  (testing "Q extension outside image"
+    ; > Q 5 5 A B C
+    (let [image (-> (create-image 6 6)
+                    (concentric-square (normalize [5 5 \A \B \C])))]
+      (is (= (str "OOOOOO\n"
+                  "OOOOOO\n"
+                  "OOCCCC\n"
+                  "OOCBBB\n"
+                  "OOCBAB\n"
+                  "OOCBBB") (image->str image)))))
   (testing "real scenario #1"
     ; > I 4 7 
     ; > L 2 3 T

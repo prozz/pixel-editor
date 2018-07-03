@@ -136,23 +136,26 @@
   [[x y] depth]
   (mapv (partial * depth) [x y]))
 
-(defn corner
+(defn- corner
   [delta [x y] depth]
   (add-delta x y (scale delta depth)))
 
 (defn square-pixels
-  [image [x y] depth]
-  (let [[x1 y1] (corner top-left [x y] depth)
-        [x2 y2] (corner top-right [x y] depth)
-        [x3 y3] (corner bottom-left [x y] depth)
-        [x4 y4] (corner bottom-right [x y] depth)
+  "pixels forming a square shape for given coords with radius"
+  [image [x y] radius]
+  (let [[x1 y1] (corner top-left [x y] radius)
+        [x2 y2] (corner top-right [x y] radius)
+        [x3 y3] (corner bottom-left [x y] radius)
+        [x4 y4] (corner bottom-right [x y] radius)
         top-edge (horizontal-pixels x1 x2 y1)
         bottom-edge (horizontal-pixels x3 x4 y3)
         left-edge (vertical-pixels x1 y1 y3)
         right-edge (vertical-pixels x2 y2 y4)]
-    (concat top-edge bottom-edge left-edge right-edge)))
+    (filter (partial within-image? image)
+            (concat top-edge bottom-edge left-edge right-edge))))
 
 (defn concentric-square
+  "api command. draws concentric squares around starting pixel, one for every colour"
   [image [x y & colours]]
   (reduce (fn [image [pixels colour]] (draw-pixels image pixels colour))
           image
