@@ -79,10 +79,20 @@
   (and (< -1 x (width image))
        (< -1 y (height image))))
 
+(def ^:private top-right [1 -1])
+(def ^:private top-left [-1 -1])
+(def ^:private bottom-right [1 1])
+(def ^:private bottom-left [-1 1])
+
+(def ^:private left [-1 0])
+(def ^:private right [1 0])
+(def ^:private top [0 1])
+(def ^:private bottom [0 -1])
+
 (defn adjacent-pixels
   "adjacent pixels for given pixel, only those sharing side, corners are excluded"
   [image [x y]]
-  (->> [[-1 0] [0 -1] [0 1] [1 0]]
+  (->> [left bottom top right]
        (map (partial add-delta x y))
        (filter (partial within-image? image))))
 
@@ -121,11 +131,6 @@
   "api command. fills region (defined as set of adjacent pixels sharing a colour) with new colour"
   [image [x y colour]]
   (draw-pixels image (region-pixels image x y) colour))
-
-(def ^:private top-right [1 -1])
-(def ^:private top-left [-1 -1])
-(def ^:private bottom-right [1 1])
-(def ^:private bottom-left [-1 1])
 
 (defn- scale
   [[x y] depth]
