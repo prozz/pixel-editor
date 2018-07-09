@@ -1,3 +1,5 @@
+# Task
+
 Graphical editors allow users to edit images in the same way text editors let us modify documents. Images are represented as an M x N array of pixels with each pixel given colour.
 
 Produce a program that simulates a simple interactive graphical editor.
@@ -49,7 +51,9 @@ JJJJJ
 JJJJJ
 ```
 
-Extension:
+
+# Extension
+
 Create a new operation ‘K’ that colours pixels in concentric squares from a given point (x,y).
 Where each square is coloured according to vector 'colours'.
 
