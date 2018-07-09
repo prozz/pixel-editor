@@ -9,21 +9,22 @@ Pixel co-ordinates are represented by a pair of integers: 1) a column number bet
 
 Commands
 The editor supports 7 commands:
-I M N​. Create a new M x N image with all pixels coloured white (O).
-C​. Clears the table, setting all pixels to white (O).
-L X Y C​. Colours the pixel (X,Y) with colour C.
-V X Y1 Y2 C​. Draw a vertical segment of colour C in column X between rows Y1 and Y2
+- I M N​. Create a new M x N image with all pixels coloured white (O).
+- C​. Clears the table, setting all pixels to white (O).
+- L X Y C​. Colours the pixel (X,Y) with colour C.
+- V X Y1 Y2 C​. Draw a vertical segment of colour C in column X between rows Y1 and Y2
 (inclusive).
-H X1 X2 Y C​. Draw a horizontal segment of colour C in row Y between columns X1 and X2
+- H X1 X2 Y C​. Draw a horizontal segment of colour C in row Y between columns X1 and X2
 (inclusive).
-F X Y C​. Fill the region R with the colour C. R is defined as: Pixel (X,Y) belongs to R. Any other
+- F X Y C​. Fill the region R with the colour C. R is defined as: Pixel (X,Y) belongs to R. Any other
 pixel which is the same colour as (X,Y) and shares a common side with any pixel in R also
 belongs to this region.
-S​. Show the contents of the current image
- X​. Terminate the session
+- S​. Show the contents of the current image
+- X​. Terminate the session
 
 Example
 In the example below, > denotes input, => denotes program output.
+```
 > I 5 6
 > L 2 3 A
 > S
@@ -46,7 +47,7 @@ JWJJJ
 JWJJJ
 JJJJJ
 JJJJJ
-
+```
 
 Extension:
 Create a new operation ‘K’ that colours pixels in concentric squares from a given point (x,y).
@@ -56,6 +57,7 @@ So for a 6x6 pixel image, a starting pixel of 4,4 and colours [a b c]
 the result would be the following:
 
 Input:
+```
 oooooo
 oooooo
 oooooo
@@ -72,5 +74,6 @@ ocbbbc
 ocbabc
 ocbbbc
 occccc
+```
 
 Any existing pixels are overwritten, no need to any error checking, can be very crude. It can be implemented as simple repl function or unit test if it saves time.
